@@ -1,5 +1,5 @@
 import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../components/firebase";
 
 const deleteExtraToy = async (id) => {
   try {

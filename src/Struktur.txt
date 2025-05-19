@@ -1,0 +1,24 @@
+
+
+3. Designskiss i Figma. (Ska testas i testgrupp - se nedan) (AMIR OCH ELHAM / VILMER & EMMA)
+Tiden har inte funnits då jag fastnade med att lägga upp sidan som fungerande på github - jag har däremot kollat Amirs kod. Men utöver det har jag inte fokuserat på annat än att bara få mitt eget att faktiskt fungera.
+
+
+
+
+
+
+
+13. Appen ska publiceras med GitHub Pages. (50%)
+Enligt Github funkar allting som det ska, får bara upp en vit ruta utan felkoder - hur jag än gör så får jag inte fram någonting. Såvitt jag luskat fram så gör inte vite det den ska göra med att uppdatera mapparna och lägga dem i distmappen - av någon anledning. Jag har placerat dem på olika platser, försökt att installera om allting flertalet gånger, rådfrågat högt och lågt på internet - men det verkar inte finnas något sätt att lösa det på? Eller så bara vet jag inte vad jag gjort rätt/fel i hela processen.
+
+
+
+
+
+_____________________________________________________________________________________________________________________________________________________
+
+För VG: Som en administratör vill jag att ändringar ska vara skyddade av inloggning, så att inte obehöriga ska kunna komma in. (Det ska gå att logga in med användarnamn=admin och lösenord=password.)
+För VG: Som en besökare vill jag kunna sortera produkter efter namn och pris, stigande och fallande; så jag kan hitta den billigaste.
+För VG: Som en besökare vill jag kunna ändra antalet av produkterna jag har i kundvagnen, så att jag kan ändra mig.
+För VG: Som en besökare vill jag kunna söka efter produkter med namn eller kategori, för att snabbt kunna hitta produkter jag är intresserad av. (Sökning ska vara "smart", dvs. den fungerar på delar av namn och oavsett case.)

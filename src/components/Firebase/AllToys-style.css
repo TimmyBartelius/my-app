@@ -1,0 +1,86 @@
+.toy-card {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0;
+  background-color: rgb(68, 193, 238);
+}
+.list-items {
+  max-width: 300px;
+  border: solid 3px rgb(0, 0, 0);
+  border-radius: 7px;
+  margin: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  align-items: center;
+}
+.title-card {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  font-weight: 600;
+  font-size: xx-large;
+}
+.title-picture {
+  justify-self: center;
+  height: 100%;
+  width: 100%;
+}
+.text-card {
+  text-align: center;
+  font-size: 20px;
+}
+.price-card {
+  color: rgb(0, 0, 0);
+  font-weight: 550;
+  font-size: 80px;
+  text-align: center;
+}
+#addBtn {
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 10px;
+  border: solid 3px black;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(36, 201, 36);
+}
+#remBtn {
+  cursor: pointer;
+  padding: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  border: solid 3px black;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(217, 0, 0);
+}
+#quantityInCart.hidden {
+  display: none;
+}
+
+#quantityInCart {
+  justify-self: center;
+  font-size: 30px;
+  margin: 0;
+  padding: 10px;
+  border: solid 2px rgb(0, 0, 0);
+  border-radius: 100px;
+}
+
+@media (max-width: 650px) {
+  .title-picture {
+    width: 190px;
+    height: 190px;
+  }
+  .price-card {
+    font-size: 40px;
+  }
+}
+@media (max-width: 620px) {
+  .toy-card {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

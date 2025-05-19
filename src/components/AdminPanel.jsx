@@ -25,16 +25,6 @@ export default function AdminPanel() {
     fetchProducts();
   }, []);
 
-  const validateNewProduct = () => {
-    const errs = {};
-    if (newName.trim() === "") errs.newName = "Namn krävs";
-    const priceNum = parseFloat(newPrice);
-    if (newPrice.trim() === "") errs.newPrice = "Pris krävs";
-    else if (isNaN(priceNum) || priceNum < 0) errs.newPrice = "Ogiltigt pris";
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
   setProducts((prev) => [
     ...prev,
     { id: docRef.id, namn: newName, pris: parseFloat(newPrice) },

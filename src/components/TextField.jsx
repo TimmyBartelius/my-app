@@ -9,9 +9,9 @@ import {
 } from "firebase/firestore";
 import Joi from "joi";
 import "./Edit.css";
-import Header from "./src/components/Header";
-import { clearExtraToys } from "./src/components/clearExtraToys";
-import deleteExtraToy from "./src/components/deleteToys";
+import Header from "./Header";
+import { clearExtraToys } from "./clearExtraToys";
+import deleteExtraToy from "./deleteToys";
 
 export default function TextField() {
   const [originalProducts, setOriginalProducts] = useState([]);

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { db } from "/src/components/firebase";
+import { db } from "./src/components/firebase";
 import {
   collection,
   getDocs,
   addDoc,
   doc,
   updateDoc,
-} from "firebase/firestore";
+} from "./firebase/firestore";
 import Joi from "joi";
-import "/Edit.css";
-import Header from "/src/components/Header";
-import { clearExtraToys } from "/src/Components/clearExtraToys";
-import deleteExtraToy from "/src/components/deleteToys";
+import "./Edit.css";
+import Header from "./src/components/Header";
+import { clearExtraToys } from "./src/Components/clearExtraToys";
+import deleteExtraToy from "./src/components/deleteToys";
 
 export default function TextField() {
   const [originalProducts, setOriginalProducts] = useState([]);

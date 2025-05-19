@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "./firebase";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  addDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import TextField from "./TextField";
 
 export default function AdminPanel() {

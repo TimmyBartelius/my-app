@@ -6,7 +6,7 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
-} from "./firebase/firestore";
+} from "firebase/firestore";
 
 // Skapa Context
 const CartContext = createContext();

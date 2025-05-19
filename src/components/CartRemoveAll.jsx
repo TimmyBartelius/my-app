@@ -1,4 +1,4 @@
-import { collection, deleteDoc, getDocs, doc } from "./firebase/firestore";
+import { collection, deleteDoc, getDocs, doc } from "firebase/firestore";
 import { db } from "./firebase";
 
 const clearCart = async () => {

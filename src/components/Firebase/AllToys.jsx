@@ -6,7 +6,7 @@ import {
   doc,
   setDoc,
   deleteDoc,
-} from "./firebase/firestore";
+} from "firebase/firestore";
 import { db } from "./firebase";
 import Joi from "joi";
 import "./AllToys-style.css";

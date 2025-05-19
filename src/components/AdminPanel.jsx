@@ -7,7 +7,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
-} from "./firebase/firestore";
+} from "firebase/firestore";
 import TextField from "./TextField";
 
 export default function AdminPanel() {

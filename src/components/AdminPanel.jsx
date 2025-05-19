@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "/src/components/firebase";
+import { db } from "./src/components/firebase";
 import {
   collection,
   getDocs,
@@ -8,7 +8,7 @@ import {
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
-import TextField from "/TextField";
+import TextField from "./TextField";
 
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);

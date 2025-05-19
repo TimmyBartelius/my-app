@@ -35,26 +35,23 @@ export default function AdminPanel() {
     return Object.keys(errs).length === 0;
   };
 
-    setProducts((prev) => [
-      ...prev,
-      { id: docRef.id, namn: newName, pris: parseFloat(newPrice) },
-    ]);
-    setNewName("");
-    setNewPrice("");
-    setErrors({});
-  };
-
-
-
-  return (
-    <div>
-      <TextField
-        label="Pris"
-        value={newPrice}
-        onChange={setNewPrice}
-        placeholder="Pris i SEK"
-        error={errors.newPrice}
-      />
-    </div>
-  );
+  setProducts((prev) => [
+    ...prev,
+    { id: docRef.id, namn: newName, pris: parseFloat(newPrice) },
+  ]);
+  setNewName("");
+  setNewPrice("");
+  setErrors({});
 }
+
+return (
+  <div>
+    <TextField
+      label="Pris"
+      value={newPrice}
+      onChange={setNewPrice}
+      placeholder="Pris i SEK"
+      error={errors.newPrice}
+    />
+  </div>
+);

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 import "./Loginstyle.css";
-import Header from "./Header";
 
 const schema = Joi.string().required().messages({
   "string.empty": "Lösenordet krävs.",

@@ -45,22 +45,25 @@ export default function AdminPanel() {
   };
 
   return (
-    <div>
-      <TextField
-        label="Namn"
-        value={newName}
-        onChange={setNewName}
-        placeholder="Produktnamn"
-        error={errors.newName}
-      />
-      <TextField
-        label="Pris"
-        value={newPrice}
-        onChange={setNewPrice}
-        placeholder="Pris i SEK"
-        error={errors.newPrice}
-      />
-      <button onClick={handleAddProduct}>Lägg till produkt</button>
-    </div>
+    <>
+      <Header />
+      <div>
+        <TextField
+          label="Namn"
+          value={newName}
+          onChange={setNewName}
+          placeholder="Produktnamn"
+          error={errors.newName}
+        />
+        <TextField
+          label="Pris"
+          value={newPrice}
+          onChange={setNewPrice}
+          placeholder="Pris i SEK"
+          error={errors.newPrice}
+        />
+        <button onClick={handleAddProduct}>Lägg till produkt</button>
+      </div>
+    </>
   );
 }

@@ -10,6 +10,7 @@ const Header = () => {
   const handleClickCart = () => {
     navigate("/Cart");
   };
+  console.log("Header rendered");
 
   //TODO: Gör handleclick för sommar, vinter, bräd och batterileksaker (Om tid finns, VG kriterie)
   return (

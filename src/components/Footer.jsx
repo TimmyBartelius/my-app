@@ -10,6 +10,7 @@ const Footer = () => {
   const handleClickAdmin = () => {
     navigate("/Login");
   };
+  console.log("Footer");
 
   return (
     //Jag returnerar det som syns på skärmen och använder id för att stylea min footer, knappar för att navigera vidare från vilken sida man befinner sig på

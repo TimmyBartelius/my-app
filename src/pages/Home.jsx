@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../components/firebase";
 import "../components/Home.css";
+import Header from "..Header.jsx";
+import Footer from "..Footer.jsx";
 
 import AllToys from "../components/Firebase/AllToys";
 
@@ -32,10 +34,12 @@ export default function Home() {
 
   return (
     <main>
+      <Header />
       <div>
         <h2 className="headline">VÅRA PRODUKTER</h2>
       </div>
       <AllToys toys={allToys} />
+      <Footer />
     </main>
   );
 }

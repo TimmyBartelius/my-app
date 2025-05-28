@@ -52,7 +52,7 @@ const Header = () => {
         </nav>
         <nav className="picForCat">
           <img
-            src={`${import.meta.env.BASE_URL}Brädspelbild.png`}
+            src={`${import.meta.env.BASE_URL}Boardgamebild.png`}
             alt="Brädspel"
           />
           <p className="categories">Brädspel</p>

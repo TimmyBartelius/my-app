@@ -19,7 +19,7 @@ const Header = () => {
           <img
             onClick={handleClickLogo}
             id="logo"
-            src={`${import.meta.env.BASE_URL}Logga`}
+            src={`${import.meta.env.BASE_URL}Logga.png`}
             alt="Logga"
           ></img>
         </nav>
@@ -28,7 +28,7 @@ const Header = () => {
           <img
             onClick={handleClickCart}
             id="cartLogo"
-            src={`${import.meta.env.BASE_URL}Cart`}
+            src={`${import.meta.env.BASE_URL}Cart.png`}
             alt="Cart"
           />
         </nav>
@@ -36,7 +36,7 @@ const Header = () => {
       <div id="allProductsBtns">
         <nav className="picForCat">
           <img
-            src={`${import.meta.env.BASE_URL}Sommarbild`}
+            src={`${import.meta.env.BASE_URL}Sommarbild.png`}
             alt="Sommarleksaker"
           />
           <p className="categories">Sommarleksaker</p>
@@ -44,7 +44,7 @@ const Header = () => {
         </nav>
         <nav className="picForCat">
           <img
-            src={`${import.meta.env.BASE_URL}Vinterbild`}
+            src={`${import.meta.env.BASE_URL}Vinterbild.png`}
             alt="Vinterleksaker"
           />
           <p className="categories">Vinterleksaker</p>
@@ -52,7 +52,7 @@ const Header = () => {
         </nav>
         <nav className="picForCat">
           <img
-            src={`${import.meta.env.BASE_URL}Brädspelsbild`}
+            src={`${import.meta.env.BASE_URL}Brädspelsbild.png`}
             alt="Brädspel"
           />
           <p className="categories">Brädspel</p>
@@ -60,7 +60,7 @@ const Header = () => {
         </nav>
         <nav className="picForCat">
           <img
-            src={`${import.meta.env.BASE_URL}Batteridrivna`}
+            src={`${import.meta.env.BASE_URL}Batteridrivna.png`}
             alt="Batteridrivna leksaker"
           />
           <p className="categories">Batteridrivet</p>

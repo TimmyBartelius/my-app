@@ -33,40 +33,6 @@ const Header = () => {
           />
         </nav>
       </section>
-      <div id="allProductsBtns">
-        <nav className="picForCat">
-          <img
-            src={`${import.meta.env.BASE_URL}Sommarbild.png`}
-            alt="Sommarleksaker"
-          />
-          <p className="categories">Sommarleksaker</p>
-          <p className="hidden-categories-text">SOMMAR</p>
-        </nav>
-        <nav className="picForCat">
-          <img
-            src={`${import.meta.env.BASE_URL}Vinterbild.png`}
-            alt="Vinterleksaker"
-          />
-          <p className="categories">Vinterleksaker</p>
-          <p className="hidden-categories-text">VINTER</p>
-        </nav>
-        <nav className="picForCat">
-          <img
-            src={`${import.meta.env.BASE_URL}Boardgamebild.png`}
-            alt="Brädspel"
-          />
-          <p className="categories">Brädspel</p>
-          <p className="hidden-categories-text">BRÄD</p>
-        </nav>
-        <nav className="picForCat">
-          <img
-            src={`${import.meta.env.BASE_URL}Batteridrivna.png`}
-            alt="Batteridrivna leksaker"
-          />
-          <p className="categories">Batteridrivet</p>
-          <p className="hidden-categories-text">BATTERI</p>
-        </nav>
-      </div>
     </header>
   );
 };

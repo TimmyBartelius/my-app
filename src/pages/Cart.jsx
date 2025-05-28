@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../components/CartContext";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+
 import "../components/Cart.css";
 
 const Cart = () => {
@@ -23,7 +22,6 @@ const Cart = () => {
 
   return (
     <main>
-      <Header />
       <h2 id="your-cart">DIN VARUKORG</h2>
 
       {showThankYou && <p className="thank-you">Tack för ditt köp! 💖</p>}
@@ -53,8 +51,6 @@ const Cart = () => {
           <Link to="/Login" className="admin-link"></Link>
         </>
       )}
-
-      <Footer />
     </main>
   );
 };

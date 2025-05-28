@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import Joi from "joi";
 import "./Edit.css";
-import Header from "./Header";
+
 import { clearExtraToys } from "./clearExtraToys";
 import deleteExtraToy from "./deleteToys";
 

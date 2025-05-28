@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Joi from "joi";
 import "./Loginstyle.css";
-import Header from "./Header";
 
 const schema = Joi.string().required().messages({
   "string.empty": "Lösenordet krävs.",
@@ -40,7 +39,6 @@ export default function AdminPasswordInput({ onChange }) {
 
   return (
     <>
-      <Header />
       <div className="admin-field">
         <label className="admin-text" htmlFor="admin-password">
           Admin-Login

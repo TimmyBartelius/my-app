@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import Joi from "joi";
 import "./Edit.css";
-import Header from "./Header";
 import { clearExtraToys } from "./clearExtraToys";
 import deleteExtraToy from "./deleteToys";
 
@@ -208,7 +207,6 @@ export default function TextField() {
   //Returnera det som syns på skärmen
   return (
     <>
-      <Header />
       <div className="edit-container">
         <button className="buttons-editor" onClick={clearExtraToys}>
           Ta bort ALLA nya produkter

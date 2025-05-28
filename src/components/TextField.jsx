@@ -208,7 +208,6 @@ export default function TextField() {
   //Returnera det som syns på skärmen
   return (
     <>
-      <Header />
       <div className="edit-container">
         <button className="buttons-editor" onClick={clearExtraToys}>
           Ta bort ALLA nya produkter

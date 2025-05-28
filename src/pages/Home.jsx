@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../components/firebase";
 import "../components/Home.css";
-import Header from "./Header.jsx";
-import Footer from "./Footer.jsx";
+import Header from "./src/components/Header";
+import Footer from "./src/components/Footer";
 
 import AllToys from "../components/Firebase/AllToys";
 

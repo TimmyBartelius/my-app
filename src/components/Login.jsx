@@ -40,7 +40,6 @@ export default function AdminPasswordInput({ onChange }) {
 
   return (
     <>
-      <Header />
       <div className="admin-field">
         <label className="admin-text" htmlFor="admin-password">
           Admin-Login

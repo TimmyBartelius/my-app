@@ -16,7 +16,7 @@ const Footer = () => {
     <main>
       <section id="footerBack">
         <button onClick={handleClickAdmin} id="adminLogin">
-          <img src="/Admin.PNG" alt="AdminLogin" />
+          <img src={`${import.meta.env.BASE_URL}Admin.PNG`} alt="AdminLogin" />
         </button>
       </section>
     </main>

@@ -47,8 +47,6 @@ export default function AdminPanel() {
   return (
     <div>
       <TextField />
-
-      <button onClick={handleAddProduct}>Lägg till produkt</button>
     </div>
   );
 }

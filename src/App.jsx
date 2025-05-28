@@ -3,10 +3,13 @@ import Home from "./pages/Home";
 import AdminPasswordInput from "./components/Login";
 import Cart from "./pages/Cart";
 import AdminPanel from "./components/AdminPanel.jsx";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 
 export default function App() {
   return (
     <main>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Cart" element={<Cart />} />
@@ -14,6 +17,7 @@ export default function App() {
         <Route path="/Cart/Login" element={<AdminPasswordInput />} />
         <Route path="/Login/AdminPanel" element={<AdminPanel />} />
       </Routes>
+      <Footer />
     </main>
   );
 }

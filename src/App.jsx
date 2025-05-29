@@ -15,7 +15,7 @@ export default function App() {
   const [toys, setToys] = useState([]);
   useEffect(() => {
     const fetchToys = async () => {
-      const toysSnapshot = await getDocs(collection(db, "Leksaker"));
+      const toysSnapshot = await getDocs(collection(db, "AllToys"));
       const toysList = toysSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),

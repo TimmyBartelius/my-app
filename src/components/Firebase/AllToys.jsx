@@ -36,6 +36,7 @@ export default function AllToys({ toys }) {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log("fetchCart körs, cartList:", cartList);
       setCart(cartList);
       setAddedToCart(new Set(cartList.map((item) => item.id)));
     };
@@ -105,6 +106,7 @@ export default function AllToys({ toys }) {
       setCart((prevCart) => {
         const found = prevCart.find((item) => item.id === toyId);
         if (!found) return prevCart;
+
         if (found.quantity > 1) {
           return prevCart.map((item) =>
             item.id === toyId ? { ...item, quantity: item.quantity - 1 } : item
@@ -116,8 +118,8 @@ export default function AllToys({ toys }) {
 
       setAddedToCart((prev) => {
         const newSet = new Set(prev);
-        const found = cart.find((item) => item.id === toyId);
-        if (found && found.quantity === 1) {
+
+        if (!cart.find((item) => item.id === toyId)) {
           newSet.delete(toyId);
         }
         return newSet;
@@ -142,7 +144,7 @@ export default function AllToys({ toys }) {
               src={toy.image || fallbackImage}
               alt={toy.title}
               onError={(e) => {
-                e.currentTarget.onerror = null; // förhindrar loop
+                e.currentTarget.onerror = null; // förhindrar evighetsloop
                 e.currentTarget.src = fallbackImage;
               }}
             />

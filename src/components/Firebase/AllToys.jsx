@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import Joi from "joi";
 import "./AllToys-style.css";
+import fallbackImage from "../assets/no-image.jpeg";
 
 export default function AllToys({ toys }) {
   const [cart, setCart] = useState([]);
@@ -137,13 +138,24 @@ export default function AllToys({ toys }) {
         {filteredToys.map((toy) => (
           <li className="list-items" key={toy.id}>
             <div className="title-card">{toy.title}</div>
-            <img className="title-picture" src={toy.image} alt={toy.title} />
+
+            <img
+              className="title-picture"
+              src={toy.image || fallbackImage}
+              alt={toy.title}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = fallbackImage;
+              }}
+            />
+
             <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
               LÄGG TILL
             </button>
             <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
               TA BORT
             </button>
+
             <p
               id="quantityInCart"
               className={addedToCart.has(toy.id) ? "" : "hidden"}
@@ -152,6 +164,7 @@ export default function AllToys({ toys }) {
                 ? `${cart.find((item) => item.id === toy.id)?.quantity || 0} st`
                 : ""}
             </p>
+
             <div className="text-card">{toy.breadtext}</div>
             <div className="price-card">{toy.price} kr</div>
           </li>

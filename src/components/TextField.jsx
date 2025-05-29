@@ -79,11 +79,11 @@ export default function TextField() {
       const docRef = await addDoc(collection(db, "ExtraToys"), newProduct);
       const added = { id: docRef.id, ...newProduct };
 
+      setNewProducts((prev) => [...prev, added]); // Uppdatera först
       setEditCache((prev) => ({
         ...prev,
         [docRef.id]: { ...newProduct },
       }));
-      setNewProducts((prev) => [...prev, added]);
     } catch (error) {
       console.error("Fel vid tillägg av produkt:", error.message);
     }
@@ -130,84 +130,71 @@ export default function TextField() {
 
   const renderProductList = (list, type) => (
     <ul className={`list-${type}`}>
-      {list.map((p) => (
-        <li className="list-items-edit" key={p.id}>
-          <p>Titel:</p>
-          <div
-            className="sections-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleEdit(p.id, "title", e.currentTarget.textContent)
-            }
-          >
-            {editCache[p.id]?.title}
-          </div>
+      {list.map((p) => {
+        if (!editCache[p.id]) return null;
 
-          <p>Pris:</p>
-          <div
-            className="sections-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleEdit(p.id, "price", e.currentTarget.textContent)
-            }
-          >
-            {editCache[p.id]?.price}
-          </div>
+        return (
+          <li className="list-items-edit" key={p.id}>
+            <p>Titel:</p>
+            <textarea
+              value={editCache[p.id].title ?? ""}
+              onChange={(e) => handleEdit(p.id, "title", e.target.value)}
+            />
 
-          <p>Informationstext:</p>
-          <div
-            className="sections-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleEdit(p.id, "breadtext", e.currentTarget.textContent)
-            }
-          >
-            {editCache[p.id]?.breadtext}
-          </div>
+            <p>Pris:</p>
+            <textarea
+              value={String(editCache[p.id].price ?? "")}
+              onChange={(e) => handleEdit(p.id, "price", e.target.value)}
+            />
 
-          <p>Bildlänk:</p>
-          <div
-            className="sections-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleEdit(p.id, "image", e.currentTarget.textContent)
-            }
-          >
-            {editCache[p.id]?.image}
-          </div>
+            <p>Informationstext:</p>
+            <textarea
+              value={editCache[p.id].breadtext ?? ""}
+              onChange={(e) => handleEdit(p.id, "breadtext", e.target.value)}
+            />
 
-          <div
-            className="sections-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              handleEdit(p.id, "quantity", e.currentTarget.textContent)
-            }
-          >
-            {editCache[p.id]?.quantity}
-          </div>
+            <p>Bildlänk:</p>
+            <textarea
+              value={editCache[p.id].image ?? ""}
+              onChange={(e) => handleEdit(p.id, "image", e.target.value)}
+            />
 
-          <button className="save-btn" onClick={() => handleSave(p.id)}>
-            Spara
-          </button>
-          {type === "new" && (
-            <div>
-              <button
-                onClick={() => {
-                  deleteExtraToy(p.id, type);
-                  setNewProducts((prev) => prev.filter((x) => x.id !== p.id));
+            {editCache[p.id].image && (
+              <img
+                src={editCache[p.id].image}
+                alt={`Bild för ${editCache[p.id].title}`}
+                onError={(e) => {
+                  e.currentTarget.src = "/no-image.jpeg";
                 }}
-              >
-                Ta bort
-              </button>
-            </div>
-          )}
-        </li>
-      ))}
+                style={{ width: "100px", height: "auto" }}
+              />
+            )}
+
+            <p>Antal:</p>
+            <textarea
+              value={String(editCache[p.id].quantity ?? "")}
+              onChange={(e) => handleEdit(p.id, "quantity", e.target.value)}
+            />
+
+            <button className="save-btn" onClick={() => handleSave(p.id)}>
+              Spara
+            </button>
+
+            {type === "new" && (
+              <div>
+                <button
+                  onClick={() => {
+                    deleteExtraToy(p.id, type);
+                    setNewProducts((prev) => prev.filter((x) => x.id !== p.id));
+                  }}
+                >
+                  Ta bort
+                </button>
+              </div>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 
@@ -243,6 +230,7 @@ export default function TextField() {
           {showNew ? "Dölj nya produkter" : "Visa nya produkter"}
         </button>
       </div>
+
       {showOriginal && (
         <>
           <h2>Originalprodukter</h2>

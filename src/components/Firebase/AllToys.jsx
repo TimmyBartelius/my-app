@@ -135,26 +135,18 @@ export default function AllToys({ toys }) {
   return (
     <div>
       <ul className="toy-card">
-        {filteredToys.map((toy) => {
-          // State per bild för fallback
-          const [imgSrc, setImgSrc] = useState(toy.image || fallbackImage);
-
-          // Detta för att undvika "hook in loop" - lös med en liten komponent istället
-          // Därför flyttar vi ut bilden i en inline komponent:
-
-          return (
-            <ToyCard
-              key={toy.id}
-              toy={toy}
-              imgSrc={imgSrc}
-              setImgSrc={setImgSrc}
-              addToyToCart={addToyToCart}
-              removeToyFromCart={removeToyFromCart}
-              addedToCart={addedToCart}
-              cart={cart}
-            />
-          );
-        })}
+        {filteredToys.map((toy) => (
+          <ToyCard
+            key={toy.id}
+            toy={toy}
+            addToyToCart={addToyToCart}
+            removeToyFromCart={removeToyFromCart}
+            quantityInCart={
+              cart.find((item) => item.id === toy.id)?.quantity || 0
+            }
+            addedToCart={addedToCart.has(toy.id)}
+          />
+        ))}
       </ul>
     </div>
   );
@@ -162,38 +154,36 @@ export default function AllToys({ toys }) {
 
 function ToyCard({
   toy,
-  imgSrc,
-  setImgSrc,
   addToyToCart,
   removeToyFromCart,
+  quantityInCart,
   addedToCart,
-  cart,
 }) {
+  const [imgSrc, setImgSrc] = useState(toy.image || fallbackImage);
+
   return (
-    <li className="list-items" key={toy.id}>
+    <li className="list-items">
       <div className="title-card">{toy.title}</div>
       <img
         src={imgSrc}
         alt={toy.title}
         onError={(e) => {
-          e.currentTarget.onerror = null; // Avregistrera onError för att undvika loop
+          e.currentTarget.onerror = null; // förhindra oändlig loop vid bildfel
           setImgSrc(fallbackImage);
         }}
       />
+
       <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
         LÄGG TILL
       </button>
       <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
         TA BORT
       </button>
-      <p
-        id="quantityInCart"
-        className={addedToCart.has(toy.id) ? "" : "hidden"}
-      >
-        {addedToCart.has(toy.id)
-          ? `${cart.find((item) => item.id === toy.id)?.quantity || 0} st`
-          : ""}
+
+      <p id="quantityInCart" className={addedToCart ? "" : "hidden"}>
+        {addedToCart ? `${quantityInCart} st` : ""}
       </p>
+
       <div className="text-card">{toy.breadtext}</div>
       <div className="price-card">{toy.price} kr</div>
     </li>

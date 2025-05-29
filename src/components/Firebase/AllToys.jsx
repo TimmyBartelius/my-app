@@ -138,17 +138,10 @@ export default function AllToys({ toys }) {
         {filteredToys.map((toy) => (
           <li className="list-items" key={toy.id}>
             <div className="title-card">{toy.title}</div>
-
             <img
-              className="title-picture"
-              src={toy.image || fallbackImage}
-              alt={toy.title}
-              onError={(e) => {
-                if (e.currentTarget.src !== fallbackImage) {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = fallbackImage;
-                }
-              }}
+              src={imgSrc}
+              alt={editCache[p.id].title}
+              onError={() => setImgSrc("/no-image.jpeg")}
             />
 
             <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
@@ -157,7 +150,6 @@ export default function AllToys({ toys }) {
             <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
               TA BORT
             </button>
-
             <p
               id="quantityInCart"
               className={addedToCart.has(toy.id) ? "" : "hidden"}
@@ -166,7 +158,6 @@ export default function AllToys({ toys }) {
                 ? `${cart.find((item) => item.id === toy.id)?.quantity || 0} st`
                 : ""}
             </p>
-
             <div className="text-card">{toy.breadtext}</div>
             <div className="price-card">{toy.price} kr</div>
           </li>

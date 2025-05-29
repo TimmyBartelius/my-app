@@ -13,10 +13,6 @@ import AllToys from "./components/Firebase/AllToys.jsx";
 
 export default function App() {
   const [toys, setToys] = useState([]);
-  if (toys.length === 0) {
-    return <p>Laddar leksaker...</p>;
-  }
-
   useEffect(() => {
     const fetchToys = async () => {
       const toysSnapshot = await getDocs(collection(db, "Leksaker"));
@@ -29,6 +25,10 @@ export default function App() {
 
     fetchToys();
   }, []);
+
+  if (toys.length === 0) {
+    return <p>Laddar leksaker...</p>;
+  }
 
   return (
     <main>

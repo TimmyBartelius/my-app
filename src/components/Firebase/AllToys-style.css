@@ -69,6 +69,13 @@
   border-radius: 100px;
 }
 
+@media (max-width: 845px) {
+  .toy-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 650px) {
   .title-picture {
     width: 190px;

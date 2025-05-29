@@ -12,6 +12,7 @@ import { db } from "../firebase";
 import Joi from "joi";
 import "./AllToys-style.css";
 import fallbackImage from "/no-image.jpeg";
+import ToyCard from "../ToyCard.jsx";
 
 export default function AllToys({ toys }) {
   const [cart, setCart] = useState([]);
@@ -149,44 +150,6 @@ export default function AllToys({ toys }) {
         ))}
       </ul>
     </div>
-  );
-}
-
-function ToyCard({
-  toy,
-  addToyToCart,
-  removeToyFromCart,
-  quantityInCart,
-  addedToCart,
-}) {
-  const [imgSrc, setImgSrc] = useState(toy.image || fallbackImage);
-
-  return (
-    <li className="list-items">
-      <div className="title-card">{toy.title}</div>
-      <img
-        src={imgSrc}
-        alt={toy.title}
-        onError={(e) => {
-          e.currentTarget.onerror = null; // förhindra oändlig loop vid bildfel
-          setImgSrc(fallbackImage);
-        }}
-      />
-
-      <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
-        LÄGG TILL
-      </button>
-      <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
-        TA BORT
-      </button>
-
-      <p id="quantityInCart" className={addedToCart ? "" : "hidden"}>
-        {addedToCart ? `${quantityInCart} st` : ""}
-      </p>
-
-      <div className="text-card">{toy.breadtext}</div>
-      <div className="price-card">{toy.price} kr</div>
-    </li>
   );
 }
 

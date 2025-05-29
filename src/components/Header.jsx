@@ -10,22 +10,24 @@ const Header = () => {
   const handleClickCart = () => {
     navigate("/Cart");
   };
-  console.log("Header rendered");
 
-  //TODO: Gör handleclick för sommar, vinter, bräd och batterileksaker (Om tid finns, VG kriterie)
+  const handleCategoryClick = (category) => {
+    navigate(category === "alla" ? "/" : `/category/${category}`);
+  };
+
   return (
     <header>
       <section id="allLogosHeader">
-        <nav href="home">
+        <nav>
           <img
             onClick={handleClickLogo}
             id="logo"
             src={`${import.meta.env.BASE_URL}Logga.png`}
             alt="Logga"
-          ></img>
+          />
         </nav>
         <p id="franchise">SVENSKA LEKSAKER AB</p>
-        <nav href="cart">
+        <nav>
           <img
             onClick={handleClickCart}
             id="cartLogo"
@@ -35,37 +37,45 @@ const Header = () => {
         </nav>
       </section>
       <div id="allProductsBtns">
-        <nav className="picForCat">
+        <nav
+          className="picForCat"
+          onClick={() => handleCategoryClick("sommar")}
+        >
           <img
             src={`${import.meta.env.BASE_URL}Sommarbild.png`}
             alt="Sommarleksaker"
           />
           <p className="categories">Sommarleksaker</p>
-          <p className="hidden-categories-text">SOMMAR</p>
         </nav>
-        <nav className="picForCat">
+        <nav
+          className="picForCat"
+          onClick={() => handleCategoryClick("vinter")}
+        >
           <img
             src={`${import.meta.env.BASE_URL}Vinterbild.png`}
             alt="Vinterleksaker"
           />
           <p className="categories">Vinterleksaker</p>
-          <p className="hidden-categories-text">VINTER</p>
         </nav>
-        <nav className="picForCat">
+        <nav
+          className="picForCat"
+          onClick={() => handleCategoryClick("brädspel")}
+        >
           <img
             src={`${import.meta.env.BASE_URL}Boardgamebild.png`}
             alt="Brädspel"
           />
           <p className="categories">Brädspel</p>
-          <p className="hidden-categories-text">BRÄD</p>
         </nav>
-        <nav className="picForCat">
+        <nav
+          className="picForCat"
+          onClick={() => handleCategoryClick("batteri")}
+        >
           <img
             src={`${import.meta.env.BASE_URL}Batteridrivna.png`}
-            alt="Batteridrivna leksaker"
+            alt="Batterileksaker"
           />
           <p className="categories">Batteridrivet</p>
-          <p className="hidden-categories-text">BATTERI</p>
         </nav>
       </div>
     </header>

@@ -7,6 +7,7 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import Joi from "joi";
 import "./AllToys-style.css";
@@ -14,6 +15,8 @@ import "./AllToys-style.css";
 export default function AllToys({ toys }) {
   const [cart, setCart] = useState([]);
   const [addedToCart, setAddedToCart] = useState(new Set());
+  const { category } = useParams();
+  const selectedCategory = category || "alla";
 
   const toySchema = Joi.object({
     title: Joi.string().required(),
@@ -21,6 +24,7 @@ export default function AllToys({ toys }) {
     breadtext: Joi.string().required(),
     price: Joi.number().required(),
     quantity: Joi.number().optional(),
+    category: Joi.string().required(),
   }).unknown(true);
 
   useEffect(() => {
@@ -53,7 +57,6 @@ export default function AllToys({ toys }) {
         return;
       }
 
-      // Uppdatera kundvagn (Firestore)
       const cartRef = doc(db, "Kundvagn", toyId);
       const cartSnapshot = await getDoc(cartRef);
 
@@ -67,9 +70,6 @@ export default function AllToys({ toys }) {
         await setDoc(cartRef, { ...toyData, quantity: 1 });
       }
 
-      console.log("Leksak tillagd i kundvagnen!");
-
-      // Uppdatera lokal state (cart och addedToCart)
       setCart((prevCart) => {
         const found = prevCart.find((item) => item.id === toyId);
         if (found) {
@@ -113,7 +113,6 @@ export default function AllToys({ toys }) {
         }
       });
 
-      // Ändring här: ta bort från addedToCart endast om quantity blir 0
       setAddedToCart((prev) => {
         const newSet = new Set(prev);
         const found = cart.find((item) => item.id === toyId);
@@ -127,10 +126,15 @@ export default function AllToys({ toys }) {
     }
   };
 
+  const filteredToys =
+    selectedCategory === "alla"
+      ? toys
+      : toys.filter((toy) => toy.category === selectedCategory);
+
   return (
     <div>
       <ul className="toy-card">
-        {toys.map((toy) => (
+        {filteredToys.map((toy) => (
           <li className="list-items" key={toy.id}>
             <div className="title-card">{toy.title}</div>
             <img className="title-picture" src={toy.image} alt={toy.title} />

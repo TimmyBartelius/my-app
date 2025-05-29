@@ -39,7 +39,7 @@ const Header = () => {
       <div id="allProductsBtns">
         <nav
           className="picForCat"
-          onClick={() => handleCategoryClick("sommar")}
+          onClick={() => handleCategoryClick("summer")}
         >
           <img
             src={`${import.meta.env.BASE_URL}Sommarbild.png`}
@@ -49,7 +49,7 @@ const Header = () => {
         </nav>
         <nav
           className="picForCat"
-          onClick={() => handleCategoryClick("vinter")}
+          onClick={() => handleCategoryClick("winter")}
         >
           <img
             src={`${import.meta.env.BASE_URL}Vinterbild.png`}
@@ -57,10 +57,7 @@ const Header = () => {
           />
           <p className="categories">Vinterleksaker</p>
         </nav>
-        <nav
-          className="picForCat"
-          onClick={() => handleCategoryClick("brädspel")}
-        >
+        <nav className="picForCat" onClick={() => handleCategoryClick("board")}>
           <img
             src={`${import.meta.env.BASE_URL}Boardgamebild.png`}
             alt="Brädspel"
@@ -69,7 +66,7 @@ const Header = () => {
         </nav>
         <nav
           className="picForCat"
-          onClick={() => handleCategoryClick("batteri")}
+          onClick={() => handleCategoryClick("battery")}
         >
           <img
             src={`${import.meta.env.BASE_URL}Batteridrivna.png`}

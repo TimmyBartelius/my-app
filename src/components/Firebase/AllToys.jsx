@@ -139,11 +139,13 @@ export default function AllToys({ toys }) {
           <li className="list-items" key={toy.id}>
             <div className="title-card">{toy.title}</div>
             <img
-              src={imgSrc}
-              alt={editCache[p.id].title}
-              onError={() => setImgSrc("/no-image.jpeg")}
+              src={toy.image || fallbackImage}
+              alt={toy.title}
+              onError={(e) => {
+                e.currentTarget.onerror = null; // förhindrar loop
+                e.currentTarget.src = fallbackImage;
+              }}
             />
-
             <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
               LÄGG TILL
             </button>

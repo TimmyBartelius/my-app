@@ -36,7 +36,6 @@ export default function AllToys({ toys }) {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("fetchCart körs, cartList:", cartList);
       setCart(cartList);
       setAddedToCart(new Set(cartList.map((item) => item.id)));
     };
@@ -106,7 +105,6 @@ export default function AllToys({ toys }) {
       setCart((prevCart) => {
         const found = prevCart.find((item) => item.id === toyId);
         if (!found) return prevCart;
-
         if (found.quantity > 1) {
           return prevCart.map((item) =>
             item.id === toyId ? { ...item, quantity: item.quantity - 1 } : item
@@ -118,8 +116,8 @@ export default function AllToys({ toys }) {
 
       setAddedToCart((prev) => {
         const newSet = new Set(prev);
-
-        if (!cart.find((item) => item.id === toyId)) {
+        const found = cart.find((item) => item.id === toyId);
+        if (found && found.quantity === 1) {
           newSet.delete(toyId);
         }
         return newSet;
@@ -137,37 +135,68 @@ export default function AllToys({ toys }) {
   return (
     <div>
       <ul className="toy-card">
-        {filteredToys.map((toy) => (
-          <li className="list-items" key={toy.id}>
-            <div className="title-card">{toy.title}</div>
-            <img
-              src={toy.image || fallbackImage}
-              alt={toy.title}
-              onError={(e) => {
-                e.currentTarget.onerror = null; // förhindrar evighetsloop
-                e.currentTarget.src = fallbackImage;
-              }}
+        {filteredToys.map((toy) => {
+          // State per bild för fallback
+          const [imgSrc, setImgSrc] = useState(toy.image || fallbackImage);
+
+          // Detta för att undvika "hook in loop" - lös med en liten komponent istället
+          // Därför flyttar vi ut bilden i en inline komponent:
+
+          return (
+            <ToyCard
+              key={toy.id}
+              toy={toy}
+              imgSrc={imgSrc}
+              setImgSrc={setImgSrc}
+              addToyToCart={addToyToCart}
+              removeToyFromCart={removeToyFromCart}
+              addedToCart={addedToCart}
+              cart={cart}
             />
-            <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
-              LÄGG TILL
-            </button>
-            <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
-              TA BORT
-            </button>
-            <p
-              id="quantityInCart"
-              className={addedToCart.has(toy.id) ? "" : "hidden"}
-            >
-              {addedToCart.has(toy.id)
-                ? `${cart.find((item) => item.id === toy.id)?.quantity || 0} st`
-                : ""}
-            </p>
-            <div className="text-card">{toy.breadtext}</div>
-            <div className="price-card">{toy.price} kr</div>
-          </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
+  );
+}
+
+function ToyCard({
+  toy,
+  imgSrc,
+  setImgSrc,
+  addToyToCart,
+  removeToyFromCart,
+  addedToCart,
+  cart,
+}) {
+  return (
+    <li className="list-items" key={toy.id}>
+      <div className="title-card">{toy.title}</div>
+      <img
+        src={imgSrc}
+        alt={toy.title}
+        onError={(e) => {
+          e.currentTarget.onerror = null; // Avregistrera onError för att undvika loop
+          setImgSrc(fallbackImage);
+        }}
+      />
+      <button id="addBtn" onClick={() => addToyToCart(toy.id)}>
+        LÄGG TILL
+      </button>
+      <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
+        TA BORT
+      </button>
+      <p
+        id="quantityInCart"
+        className={addedToCart.has(toy.id) ? "" : "hidden"}
+      >
+        {addedToCart.has(toy.id)
+          ? `${cart.find((item) => item.id === toy.id)?.quantity || 0} st`
+          : ""}
+      </p>
+      <div className="text-card">{toy.breadtext}</div>
+      <div className="price-card">{toy.price} kr</div>
+    </li>
   );
 }
 

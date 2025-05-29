@@ -21,7 +21,7 @@ export default function AllToys({ toys }) {
 
   const toySchema = Joi.object({
     title: Joi.string().required(),
-    image: Joi.string().optional(),
+    image: Joi.string().uri().allow("").optional(),
     breadtext: Joi.string().required(),
     price: Joi.number().required(),
     quantity: Joi.number().optional(),

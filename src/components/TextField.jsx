@@ -24,7 +24,7 @@ export default function TextField() {
     title: Joi.string().min(3).max(50).required(),
     price: Joi.number().min(0).required(),
     breadtext: Joi.string().allow(""),
-    image: Joi.string().uri().allow(""),
+    image: Joi.string().allow(""),
     quantity: Joi.number().min(0),
   });
 

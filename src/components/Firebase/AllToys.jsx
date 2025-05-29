@@ -144,8 +144,10 @@ export default function AllToys({ toys }) {
               src={toy.image || fallbackImage}
               alt={toy.title}
               onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = fallbackImage;
+                if (e.currentTarget.src !== fallbackImage) {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = fallbackImage;
+                }
               }}
             />
 

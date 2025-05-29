@@ -65,7 +65,7 @@ export default function TextField() {
       title: "Ny produkt",
       breadtext: "Beskrivning",
       image:
-        "https://scontent-arn2-1.xx.fbcdn.net/v/t39.30808-6/458383024_10162048330247360_5508830640052136751_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=PUyAbWEdSBsQ7kNvwHzyqEA&_nc_oc=AdkXG8LUdaqK1HiAwY82eGYy_qfW6iOkgktdXRfq-GwA78ineTqWnCeGjDMawyPrVZJpDQNQNTsS0rtAvKlLSNgV&_nc_zt=23&_nc_ht=scontent-arn2-1.xx&_nc_gid=5oze6tWXtUWZ-unI_ZeUAg&oh=00_AfJAx2Ohb-dOC175vD2XjdeqNpF03cb14G9p8EM6A_dq5g&oe=682D2138",
+        "https://img.freepik.com/vektoren-premium/standardbild-icon-vektor-fehlende-bildseite-fuer-website-design-oder-mobile-app-kein-foto-verfuegbar_87543-11093.jpg",
       price: 0,
       quantity: 1,
     };

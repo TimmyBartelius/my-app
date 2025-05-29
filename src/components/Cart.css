@@ -67,3 +67,21 @@ p {
   text-align: center;
   width: 300px;
 }
+@media (max-width: 1580px) {
+  .listed-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 850px) {
+  .listed-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 380px) {
+  .listed-items {
+    display: flex;
+    flex-direction: column;
+  }
+}

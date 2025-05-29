@@ -30,7 +30,6 @@ export default function TextField() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      // Hämta standard från AllToys
       const snapshotOriginal = await getDocs(collection(db, "AllToys"));
       const listOriginal = snapshotOriginal.docs.map((doc) => ({
         id: doc.id,
@@ -38,13 +37,11 @@ export default function TextField() {
       }));
       setOriginalProducts(listOriginal);
 
-      // Hämta nya från ExtraToys
       const snapshotNew = await getDocs(collection(db, "ExtraToys"));
       const listNew = snapshotNew.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      // Uppdatera listan
       setNewProducts(listNew);
 
       const cache = {};
@@ -62,7 +59,7 @@ export default function TextField() {
 
     fetchProducts();
   }, []);
-  //funktion för att lägga till en produkt, med standard bildlänk
+
   const handleAddProduct = async () => {
     const newProduct = {
       title: "Ny produkt",
@@ -72,7 +69,7 @@ export default function TextField() {
       price: 0,
       quantity: 1,
     };
-    //Validera produktne
+
     const validation = schema.validate(newProduct);
     if (validation.error) {
       console.error("Valideringsfel:", validation.error.details[0].message);
@@ -120,7 +117,7 @@ export default function TextField() {
       console.error("Fel vid uppdatering:", error.message);
     }
   };
-  //Editera produkten (för original-listan så de inte tas bort helt)
+
   const handleEdit = (id, field, value) => {
     setEditCache((prev) => ({
       ...prev,
@@ -131,7 +128,7 @@ export default function TextField() {
       },
     }));
   };
-  //Ihopslaget
+
   const renderProductList = (list, type) => (
     <ul className={`list-${type}`}>
       {list.map((p) => (
@@ -198,54 +195,68 @@ export default function TextField() {
           <button className="save-btn" onClick={() => handleSave(p.id)}>
             Spara
           </button>
-          <div key={p.id}>
-            <button onClick={() => deleteExtraToy(p.id)}>Ta bort</button>
-          </div>
+          {type === "new" && (
+            <div>
+              <button
+                onClick={() => {
+                  deleteExtraToy(p.id, type);
+                  setNewProducts((prev) => prev.filter((x) => x.id !== p.id));
+                }}
+              >
+                Ta bort
+              </button>
+            </div>
+          )}
         </li>
       ))}
     </ul>
   );
-  //Returnera det som syns på skärmen
+
   return (
     <>
       <div className="edit-container">
-        <button className="buttons-editor" onClick={clearExtraToys}>
+        <button
+          className="buttons-editor"
+          onClick={async () => {
+            await clearExtraToys();
+            setNewProducts([]);
+          }}
+        >
           Ta bort ALLA nya produkter
         </button>
         <button className="buttons-editor" onClick={handleAddProduct}>
           Lägg till ny produkt
         </button>
-
-        <div className="buttons-in-editor">
-          <button
-            className="buttons-editor"
-            onClick={() => setShowOriginal((prev) => !prev)}
-          >
-            {showOriginal ? "Dölj originalprodukter" : "Visa originalprodukter"}
-          </button>
-
-          <button
-            className="buttons-editor"
-            onClick={() => setShowNew((prev) => !prev)}
-          >
-            {showNew ? "Dölj nya produkter" : "Visa nya produkter"}
-          </button>
-        </div>
-
-        {showOriginal && (
-          <>
-            <h2>Originalprodukter</h2>
-            {renderProductList(originalProducts, "original")}
-          </>
-        )}
-
-        {showNew && (
-          <>
-            <h2>Nya produkter</h2>
-            {renderProductList(newProducts, "new")}
-          </>
-        )}
       </div>
+
+      <div className="buttons-in-editor">
+        <button
+          className="buttons-editor"
+          onClick={() => setShowOriginal((prev) => !prev)}
+        >
+          {showOriginal ? "Dölj originalprodukter" : "Visa originalprodukter"}
+        </button>
+
+        <button
+          className="buttons-editor"
+          onClick={() => setShowNew((prev) => !prev)}
+        >
+          {showNew ? "Dölj nya produkter" : "Visa nya produkter"}
+        </button>
+      </div>
+      {showOriginal && (
+        <>
+          <h2>Originalprodukter</h2>
+          {renderProductList(originalProducts, "original")}
+        </>
+      )}
+
+      {showNew && (
+        <>
+          <h2>Nya produkter</h2>
+          {renderProductList(newProducts, "new")}
+        </>
+      )}
     </>
   );
 }

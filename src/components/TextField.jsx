@@ -64,8 +64,7 @@ export default function TextField() {
     const newProduct = {
       title: "Ny produkt",
       breadtext: "Beskrivning",
-      image:
-        "https://img.freepik.com/vektoren-premium/standardbild-icon-vektor-fehlende-bildseite-fuer-website-design-oder-mobile-app-kein-foto-verfuegbar_87543-11093.jpg",
+      image: "/no-image.jpeg",
       price: 0,
       quantity: 1,
     };

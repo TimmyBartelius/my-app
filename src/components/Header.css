@@ -48,15 +48,13 @@ body {
   font-weight: 600;
   text-align: center;
   font-size: 15px;
+  color: rgb(255, 255, 255);
 }
 .hidden-categories-text {
   display: none;
 }
 
 @media (max-width: 560px) {
-  .categories {
-    display: none;
-  }
   #allProductsBtns {
     display: flex;
     flex-direction: column;

@@ -9,7 +9,10 @@ export default function ToyCard({
   quantityInCart,
   addedToCart,
 }) {
-  const [imgSrc, setImgSrc] = useState(toy.image || fallbackImage);
+  const defaultImage = "/no-image.jpeg";
+  const [imgSrc, setImgSrc] = useState(
+    toy.image && toy.image.trim() !== "" ? toy.image : defaultImage
+  );
 
   return (
     <li className="list-items">
@@ -18,9 +21,10 @@ export default function ToyCard({
         className="title-picture"
         src={imgSrc}
         alt={toy.title}
-        onError={(e) => {
-          e.currentTarget.onerror = null;
-          setImgSrc(fallbackImage);
+        onError={() => {
+          if (imgSrc !== defaultImage) {
+            setImgSrc(defaultImage);
+          }
         }}
       />
 
@@ -30,11 +34,9 @@ export default function ToyCard({
       <button id="remBtn" onClick={() => removeToyFromCart(toy.id)}>
         TA BORT
       </button>
-
       <p id="quantityInCart" className={addedToCart ? "" : "hidden"}>
         {addedToCart ? `${quantityInCart} st` : ""}
       </p>
-
       <div className="text-card">{toy.breadtext}</div>
       <div className="price-card">{toy.price} kr</div>
     </li>

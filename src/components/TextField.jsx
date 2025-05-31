@@ -24,7 +24,7 @@ export default function TextField() {
     title: Joi.string().min(3).max(50).required(),
     price: Joi.number().min(0).required(),
     breadtext: Joi.string().allow(""),
-    image: Joi.string().allow(""),
+    image: Joi.string().uri().allow("").optional(),
     quantity: Joi.number().min(0),
   });
 
@@ -64,7 +64,7 @@ export default function TextField() {
     const newProduct = {
       title: "Ny produkt",
       breadtext: "Beskrivning",
-      image: "/no-image.jpeg",
+      image: "",
       price: 0,
       quantity: 1,
     };
@@ -79,7 +79,7 @@ export default function TextField() {
       const docRef = await addDoc(collection(db, "ExtraToys"), newProduct);
       const added = { id: docRef.id, ...newProduct };
 
-      setNewProducts((prev) => [...prev, added]); // Uppdatera först
+      setNewProducts((prev) => [...prev, added]);
       setEditCache((prev) => ({
         ...prev,
         [docRef.id]: { ...newProduct },

@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 0;
-  background-color: rgb(68, 193, 238);
+  background-color: rgb(182, 236, 255);
 }
 .list-items {
   max-width: 300px;
@@ -28,6 +28,8 @@
 }
 .text-card {
   text-align: center;
+  border: solid 3px rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
   font-size: 20px;
 }
 .price-card {

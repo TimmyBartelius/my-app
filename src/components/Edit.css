@@ -53,3 +53,9 @@ h2 {
   width: 80px;
   height: 33px;
 }
+.edit-pic {
+  display: flex;
+  max-width: 100px;
+  max-height: 100px;
+  justify-self: center;
+}

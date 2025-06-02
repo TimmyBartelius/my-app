@@ -16,7 +16,7 @@ export default function TextField() {
   const [editCache, setEditCache] = useState({});
   const [showAll, setShowAll] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [deleteMessage, setDeleteMessage] = useState(""); // <-- Ny state
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   const schema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
@@ -164,12 +164,12 @@ export default function TextField() {
 
             {editCache[p.id].image && (
               <img
+                className="edit-pic"
                 src={editCache[p.id].image}
                 alt={`Bild för ${editCache[p.id].title}`}
                 onError={(e) => {
                   e.currentTarget.src = "/no-image.jpeg";
                 }}
-                style={{ width: "100px", height: "auto" }}
               />
             )}
 

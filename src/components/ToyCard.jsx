@@ -1,5 +1,4 @@
 import { useState } from "react";
-import fallbackImage from "/no-image.jpeg";
 import "./Firebase/AllToys-style.css";
 
 export default function ToyCard({

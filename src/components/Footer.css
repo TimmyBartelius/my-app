@@ -1,5 +1,6 @@
 #footerBack {
-  background-color: rgb(4, 104, 217);
+  border: dashed 5px rgb(255, 255, 255);
+  background-color: rgb(55, 164, 204);
   display: flex;
   flex-direction: row;
   box-sizing: border-box;

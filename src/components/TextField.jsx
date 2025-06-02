@@ -9,16 +9,14 @@ import {
 } from "firebase/firestore";
 import Joi from "joi";
 import "./Edit.css";
-
-import { clearExtraToys } from "./clearExtraToys";
 import deleteExtraToy from "./deleteToys";
 
 export default function TextField() {
-  const [originalProducts, setOriginalProducts] = useState([]);
-  const [newProducts, setNewProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [editCache, setEditCache] = useState({});
-  const [showOriginal, setShowOriginal] = useState(false);
-  const [showNew, setShowNew] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState(""); // <-- Ny state
 
   const schema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
@@ -34,24 +32,26 @@ export default function TextField() {
       const listOriginal = snapshotOriginal.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        source: "AllToys",
       }));
-      setOriginalProducts(listOriginal);
 
       const snapshotNew = await getDocs(collection(db, "ExtraToys"));
       const listNew = snapshotNew.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        source: "ExtraToys",
       }));
-      setNewProducts(listNew);
+
+      const combined = [...listNew, ...listOriginal];
+      setAllProducts(combined);
 
       const cache = {};
-      [...listOriginal, ...listNew].forEach((p) => {
+      combined.forEach((p) => {
         cache[p.id] = {
           title: p.title,
           price: p.price,
           breadtext: p.breadtext,
           image: p.image,
-          quantity: p.quantity,
         };
       });
       setEditCache(cache);
@@ -66,7 +66,6 @@ export default function TextField() {
       breadtext: "Beskrivning",
       image: "",
       price: 0,
-      quantity: 1,
     };
 
     const validation = schema.validate(newProduct);
@@ -77,9 +76,9 @@ export default function TextField() {
 
     try {
       const docRef = await addDoc(collection(db, "ExtraToys"), newProduct);
-      const added = { id: docRef.id, ...newProduct };
+      const added = { id: docRef.id, ...newProduct, source: "ExtraToys" };
 
-      setNewProducts((prev) => [...prev, added]);
+      setAllProducts((prev) => [added, ...prev]);
       setEditCache((prev) => ({
         ...prev,
         [docRef.id]: { ...newProduct },
@@ -97,21 +96,18 @@ export default function TextField() {
       return;
     }
 
-    const isNew = newProducts.some((p) => p.id === id);
-    const collectionName = isNew ? "ExtraToys" : "AllToys";
+    const product = allProducts.find((p) => p.id === id);
+    const collectionName = product?.source || "ExtraToys";
 
     try {
       await updateDoc(doc(db, collectionName, id), updated);
 
-      if (isNew) {
-        setNewProducts((prev) =>
-          prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
-        );
-      } else {
-        setOriginalProducts((prev) =>
-          prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
-        );
-      }
+      setAllProducts((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, ...updated } : p))
+      );
+
+      setSuccessMessage("Tillagd!");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Fel vid uppdatering:", error.message);
     }
@@ -128,9 +124,16 @@ export default function TextField() {
     }));
   };
 
-  const renderProductList = (list, type) => (
-    <ul className={`list-${type}`}>
-      {list.map((p) => {
+  const handleDelete = (id) => {
+    deleteExtraToy(id, "ExtraToys");
+    setAllProducts((prev) => prev.filter((p) => p.id !== id));
+    setDeleteMessage("Borttagen");
+    setTimeout(() => setDeleteMessage(""), 3000);
+  };
+
+  const renderProductList = () => (
+    <ul className="list-all">
+      {allProducts.map((p) => {
         if (!editCache[p.id]) return null;
 
         return (
@@ -170,27 +173,14 @@ export default function TextField() {
               />
             )}
 
-            <p>Antal:</p>
-            <textarea
-              value={String(editCache[p.id].quantity ?? "")}
-              onChange={(e) => handleEdit(p.id, "quantity", e.target.value)}
-            />
-
             <button className="save-btn" onClick={() => handleSave(p.id)}>
               Spara
             </button>
 
-            {type === "new" && (
-              <div>
-                <button
-                  onClick={() => {
-                    deleteExtraToy(p.id, type);
-                    setNewProducts((prev) => prev.filter((x) => x.id !== p.id));
-                  }}
-                >
-                  Ta bort
-                </button>
-              </div>
+            {p.source === "ExtraToys" && (
+              <button className="delete-btn" onClick={() => handleDelete(p.id)}>
+                Ta bort
+              </button>
             )}
           </li>
         );
@@ -201,47 +191,25 @@ export default function TextField() {
   return (
     <>
       <div className="edit-container">
-        <button
-          className="buttons-editor"
-          onClick={async () => {
-            await clearExtraToys();
-            setNewProducts([]);
-          }}
-        >
-          Ta bort ALLA nya produkter
-        </button>
         <button className="buttons-editor" onClick={handleAddProduct}>
-          Lägg till ny produkt
-        </button>
-      </div>
-
-      <div className="buttons-in-editor">
-        <button
-          className="buttons-editor"
-          onClick={() => setShowOriginal((prev) => !prev)}
-        >
-          {showOriginal ? "Dölj originalprodukter" : "Visa originalprodukter"}
+          Skapa ny produkt
         </button>
 
         <button
           className="buttons-editor"
-          onClick={() => setShowNew((prev) => !prev)}
+          onClick={() => setShowAll((prev) => !prev)}
         >
-          {showNew ? "Dölj nya produkter" : "Visa nya produkter"}
+          {showAll ? "Dölj alla leksaker" : "Visa alla leksaker"}
         </button>
       </div>
 
-      {showOriginal && (
-        <>
-          <h2>Originalprodukter</h2>
-          {renderProductList(originalProducts, "original")}
-        </>
-      )}
+      {successMessage && <div className="success">{successMessage}</div>}
+      {deleteMessage && <div className="success">{deleteMessage}</div>}
 
-      {showNew && (
+      {showAll && (
         <>
-          <h2>Nya produkter</h2>
-          {renderProductList(newProducts, "new")}
+          <h2>Alla produkter</h2>
+          {renderProductList()}
         </>
       )}
     </>

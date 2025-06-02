@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import Joi from "joi";
 import "./AllToys-style.css";
-import fallbackImage from "/no-image.jpeg";
+
 import ToyCard from "../ToyCard.jsx";
 
 export default function AllToys({ toys }) {

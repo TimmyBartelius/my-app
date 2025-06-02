@@ -43,6 +43,24 @@
   font-size: 30px;
   color: rgb(9, 112, 9);
 }
+.admin-input-field {
+  border: 2px solid gray;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.admin-input-field.error {
+  border-color: red;
+  background-color: #ffe6e6;
+}
+
+.admin-input-field.success {
+  border-color: green;
+  background-color: #e6ffe6;
+}
 
 @media (max-width: 440px) {
   .admin-field {

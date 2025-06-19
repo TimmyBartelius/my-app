@@ -59,3 +59,19 @@ h2 {
   max-height: 100px;
   justify-self: center;
 }
+.text-window {
+  display: flex;
+  justify-self: center;
+}
+.saveBtn {
+  display: flex;
+  justify-self: center;
+  padding: 20px;
+  margin: 20px;
+}
+.abortBtn {
+  display: flex;
+  justify-self: center;
+  padding: 20px;
+  margin: 20px;
+}

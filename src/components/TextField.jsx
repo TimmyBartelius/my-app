@@ -18,6 +18,15 @@ export default function TextField() {
   const [successMessage, setSuccessMessage] = useState("");
   const [deleteMessage, setDeleteMessage] = useState("");
 
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newProductData, setNewProductData] = useState({
+    title: "",
+    breadtext: "",
+    image: "",
+    price: "",
+  });
+  const [formError, setFormError] = useState("");
+
   const schema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
     price: Joi.number().min(0).required(),
@@ -60,31 +69,39 @@ export default function TextField() {
     fetchProducts();
   }, []);
 
-  const handleAddProduct = async () => {
-    const newProduct = {
-      title: "Ny produkt",
-      breadtext: "Beskrivning",
-      image: "",
-      price: 0,
-    };
-
-    const validation = schema.validate(newProduct);
+  const handleSaveNewProduct = async () => {
+    const validation = schema.validate(newProductData);
     if (validation.error) {
-      console.error("Valideringsfel:", validation.error.details[0].message);
+      setFormError(validation.error.details[0].message);
       return;
     }
 
     try {
-      const docRef = await addDoc(collection(db, "ExtraToys"), newProduct);
-      const added = { id: docRef.id, ...newProduct, source: "ExtraToys" };
+      const docRef = await addDoc(collection(db, "ExtraToys"), {
+        ...newProductData,
+        price: Number(newProductData.price),
+      });
+
+      const added = {
+        id: docRef.id,
+        ...newProductData,
+        price: Number(newProductData.price),
+        source: "ExtraToys",
+      };
 
       setAllProducts((prev) => [added, ...prev]);
       setEditCache((prev) => ({
         ...prev,
-        [docRef.id]: { ...newProduct },
+        [docRef.id]: { ...added },
       }));
+      setShowAddForm(false);
+      setNewProductData({ title: "", breadtext: "", image: "", price: "" });
+      setFormError("");
+      setSuccessMessage("Ny produkt tillagd!");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
-      console.error("Fel vid tillägg av produkt:", error.message);
+      console.error("Fel vid tillägg:", error.message);
+      setFormError("Kunde inte lägga till produkten.");
     }
   };
 
@@ -191,7 +208,7 @@ export default function TextField() {
   return (
     <>
       <div className="edit-container">
-        <button className="buttons-editor" onClick={handleAddProduct}>
+        <button className="buttons-editor" onClick={() => setShowAddForm(true)}>
           Skapa ny produkt
         </button>
 
@@ -205,6 +222,62 @@ export default function TextField() {
 
       {successMessage && <div className="success">{successMessage}</div>}
       {deleteMessage && <div className="success">{deleteMessage}</div>}
+
+      {showAddForm && (
+        <div className="new-product-form">
+          <h2>Lägg till ny produkt</h2>
+          <p>Titel:</p>
+          <input
+            className="text-window"
+            type="text"
+            value={newProductData.title}
+            onChange={(e) =>
+              setNewProductData({ ...newProductData, title: e.target.value })
+            }
+          />
+
+          <p>Pris:</p>
+          <input
+            className="text-window"
+            type="number"
+            value={newProductData.price}
+            onChange={(e) =>
+              setNewProductData({ ...newProductData, price: e.target.value })
+            }
+          />
+
+          <p>Informationstext:</p>
+          <textarea
+            className="text-window"
+            value={newProductData.breadtext}
+            onChange={(e) =>
+              setNewProductData({
+                ...newProductData,
+                breadtext: e.target.value,
+              })
+            }
+          />
+
+          <p>Bildlänk:</p>
+          <input
+            className="text-window"
+            type="text"
+            value={newProductData.image}
+            onChange={(e) =>
+              setNewProductData({ ...newProductData, image: e.target.value })
+            }
+          />
+
+          {formError && <p className="error">{formError}</p>}
+
+          <button className="saveBtn" onClick={handleSaveNewProduct}>
+            Spara produkt
+          </button>
+          <button className="abortBtn" onClick={() => setShowAddForm(false)}>
+            Avbryt
+          </button>
+        </div>
+      )}
 
       {showAll && (
         <>
